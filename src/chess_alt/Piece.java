@@ -6,7 +6,6 @@ public class Piece {
     private int colour;
     private boolean hasMoved;
 
-    protected Board chessboard;
 
     public Piece(int x, int y) {
         this.x = x;
@@ -32,9 +31,10 @@ public class Piece {
         this.colour = colour;
         this.x = x;
         this.y = y;
-    }
 
-    public void removePiece() {
+        chessboard.placePiece(this, x, y);
+    }
+    public void removePiece(Board chessboard) {
         chessboard.removeFromBoard(this);		//piece remover
         x = -1;
         y = -1;
@@ -42,9 +42,9 @@ public class Piece {
     public void capturePiece(Piece capturedPiece) {		//stuk capturen
         capturedPiece.removePiece();
     }
-    public boolean isValidMove(int x, int y) {
+    public boolean isValidMove(Board chessboard, int x, int y) {
         if (chessboard.isInBounds(x, y)) {
-            Piece place = chessboard.pieceAt(x, y);
+            Piece place = chessboard.pieceAt(x, y); //pieceAt -> getCoordinates
             if (place == null) {
                 return true;
             }
@@ -54,10 +54,24 @@ public class Piece {
         }
         return false;
     }
-
-    public Piece move(int x, int y) {
-        Piece movedPiece = chessboard.pieceAt(x, y);
+    public Piece move(Piece movedPiece, int x, int y) {
+        movedPiece = chessboard.placePiece(this, x, y);
         return movedPiece;
+    }
+
+    public void moveTo(int newX, int newY){
+        if (chessboard.pieceAt(x, y) == this) {
+            chessboard.removeFromBoard(this);
+        }
+        this.x = newX;
+        this.y = newY;
+
+        Piece target = chessboard.pieceAt(newX, newY);
+        if (target != null){
+            this.capturePiece(target);
+        }
+        chessboard.placePiece(this, newX, newY);
+        hasMoved = true;
     }
 
 

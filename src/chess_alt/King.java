@@ -16,4 +16,5 @@ public class King extends Piece {
     public King(Board chessboard, int colour, int x, int y) {
         super(chessboard, colour, x, y);
     }
+
 }
