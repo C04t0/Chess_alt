@@ -3,11 +3,11 @@ package chess_alt;
 public class Knight extends Piece{
 
 
-    public Knight(int x, int y) {
-        super(x, y);
+    public Knight(Piece[][] chessboard, int x, int y, int i) {
+        super(chessboard, x, y, y);
     }
 
-    public Knight(Board chessboard, int colour) {
+    public Knight(Piece[][] chessboard, int colour) {
         super(chessboard, colour);
     }
 

@@ -2,11 +2,11 @@ package chess_alt;
 
 public class Pawn extends Piece{
 
-    public Pawn(int x, int y) {
-        super(x, y);
+    public Pawn(Piece[][] chessboard, int x, int y, int i) {
+        super(chessboard, x, y, y);
     }
 
-    public Pawn(Board chessboard, int colour) {
+    public Pawn(Piece[][] chessboard, int colour) {
         super (chessboard, colour);
     }
 

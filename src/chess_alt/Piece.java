@@ -1,50 +1,25 @@
 package chess_alt;
 
+
+import static chess_alt.Game.*;
+
 public class Piece {
     private int x;
     private int y;
     private int colour;
     private boolean hasMoved;
 
-
-    public Piece(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public Piece(Board chessboard, int colour) {			//constructor 1
-        this.chessboard = chessboard;
-        this.colour = colour;
-        hasMoved = false;
-        x = -1;
-        y = -1;
-    }
-
-    public Piece(int colour, int x, int y) {
-        this.colour = colour;
-        this.x = x;
-        this.y = y;
-    }
-
-    public Piece (Board chessboard, int colour, int x, int y) {		//constructor 2
-        this.chessboard = chessboard;
-        this.colour = colour;
-        this.x = x;
-        this.y = y;
-
-        chessboard.placePiece(this, x, y);
-    }
-    public void removePiece(Board chessboard) {
-        chessboard.removeFromBoard(this);		//piece remover
+    public void removePiece(Piece[][] chessboard) {
+        removeFromBoard(this);		//piece remover
         x = -1;
         y = -1;
     }
     public void capturePiece(Piece capturedPiece) {		//stuk capturen
-        capturedPiece.removePiece();
+        capturedPiece.removePiece(getBoard());
     }
-    public boolean isValidMove(Board chessboard, int x, int y) {
-        if (chessboard.isInBounds(x, y)) {
-            Piece place = chessboard.pieceAt(x, y); //pieceAt -> getCoordinates
+    public boolean isValidMove(Piece[][] chessboard, int x, int y) {
+        if (isInBounds(x, y)) {
+            Piece place = pieceAt(x, y); //pieceAt -> pieceAt
             if (place == null) {
                 return true;
             }
@@ -55,25 +30,49 @@ public class Piece {
         return false;
     }
     public Piece move(Piece movedPiece, int x, int y) {
-        movedPiece = chessboard.placePiece(this, x, y);
+        movedPiece = new Piece(Game.getBoard(), colour, x, y);
         return movedPiece;
     }
 
     public void moveTo(int newX, int newY){
-        if (chessboard.pieceAt(x, y) == this) {
-            chessboard.removeFromBoard(this);
+        if (pieceAt(x, y) == this) {
+            removeFromBoard(this);
         }
         this.x = newX;
         this.y = newY;
 
-        Piece target = chessboard.pieceAt(newX, newY);
+        Piece target = pieceAt(newX, newY);
         if (target != null){
             this.capturePiece(target);
         }
-        chessboard.placePiece(this, newX, newY);
+        placePiece(this, newX, newY);
         hasMoved = true;
     }
 
+    /**CONSTRUCTORS**/
+
+    public Piece(Piece[][] chessboard, int colour) {			//constructor 1
+        this.colour = colour;
+        hasMoved = false;
+    }
+
+    public Piece(Board chessboard, int x, int y, int i) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Piece(Piece[][] chessboard, int colour, int x, int y) {
+        chessboard = getBoard();
+        this.colour = colour;
+        this.x = x;
+        this.y = y;
+    }
+
+    public Piece(int colour, int x, int y) {
+        this.colour = colour;
+        this.x = x;
+        this.y = y;
+    }
 
     /** Getters en Setters **/
 

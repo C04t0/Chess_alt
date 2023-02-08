@@ -2,11 +2,11 @@ package chess_alt;
 
 public class Queen extends Piece{
 
-    public Queen(int x, int y) {
-        super (x, y);
+    public Queen(Piece[][] chessboard, int x, int y, int i) {
+        super (chessboard, x, y, y);
     }
 
-    public Queen(Board chessboard, int colour) {
+    public Queen(Piece[][] chessboard, int colour) {
         super(chessboard, colour);
     }
 

@@ -2,11 +2,11 @@ package chess_alt;
 
 public class Rook extends Piece{
 
-    public Rook (int x, int y) {
-        super (x, y);
+    public Rook (Piece[][] chessboard, int x, int y, int i) {
+        super (chessboard, x, y, y);
     }
 
-    public Rook (Board chessboard, int colour) {
+    public Rook (Piece[][] chessboard, int colour) {
         super(chessboard, colour);
     }
 
