@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Game {
     public static final int BLACK = 0;
     public static final int WHITE = 1;
-    Scanner userInput = new Scanner(System.in);
+    Scanner keyboard = new Scanner(System.in);
     private int currentPlayer;
     private static Piece[][] chessboard = new Piece[8][8];
     private LinkedList<Piece> blackPieces;
@@ -99,11 +99,11 @@ public class Game {
                         break;
                    }
                 System.out.print("Which piece to move? X: ");
-                int nextX = userInput.nextInt();
+                int nextX1 = keyboard.nextInt();
                 System.out.print("Y: ");
-                int nextY = userInput.nextInt();
+                int nextY1 = keyboard.nextInt();
 
-                Piece target = pieceAt(nextX, nextY);
+                Piece target = pieceAt(nextX1, nextY1);
                 if (target == null) {
                     System.out.println("That location is invalid");
                     continue;
@@ -112,12 +112,13 @@ public class Game {
                     continue;
                 } else {
                     System.out.print("Where to move this piece? X: ");
-                    nextX = userInput.nextInt();
+                    int nextX = keyboard.nextInt();
                     System.out.print("Y: ");
-                    nextY = userInput.nextInt();
+                     int nextY = keyboard.nextInt();
 
                     if (target.isValidMove(chessboard, nextX, nextY)) {
-                        target.move(target, nextX, nextY);
+                        target.moveTo(nextX, nextY);
+                        chessboard[nextX1][nextY1] = null;
                     } else {
                         System.out.println("Cannot move there");
                     }
@@ -128,6 +129,7 @@ public class Game {
 
 
     public void displayBoard(){                 //bord tonen
+
         for (int i = 0; i < chessboard.length; i++){
             for (int j = 0; j < chessboard[i].length; j++){
                 if (chessboard[i][j] == null)
@@ -356,9 +358,9 @@ public class Game {
         }
         return null;
     }
-    public static void removeFromBoard(Piece removePiece){
-        int oldXLocation = removePiece.getX();
-        int oldYLocation = removePiece.getY();
+    public static void removeFromBoard(Piece removePiece, int x, int y){
+        int oldXLocation = x;
+        int oldYLocation = y;
 
         chessboard[oldXLocation][oldYLocation] = null;
     }

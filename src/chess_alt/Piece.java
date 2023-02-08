@@ -6,13 +6,11 @@ import static chess_alt.Game.*;
 public class Piece {
     private int x;
     private int y;
-    private int colour;
+    private static int colour;
     private boolean hasMoved;
 
     public void removePiece(Piece[][] chessboard) {
-        removeFromBoard(this);		//piece remover
-        x = -1;
-        y = -1;
+        removeFromBoard(this, x, y);		//piece remover
     }
     public void capturePiece(Piece capturedPiece) {		//stuk capturen
         capturedPiece.removePiece(getBoard());
@@ -36,7 +34,7 @@ public class Piece {
 
     public void moveTo(int newX, int newY){
         if (pieceAt(x, y) == this) {
-            removeFromBoard(this);
+            removeFromBoard(this, x, y);
         }
         this.x = newX;
         this.y = newY;
@@ -76,7 +74,7 @@ public class Piece {
 
     /** Getters en Setters **/
 
-    public int getColour() {
+    public static int getColour() {
         return colour;
     }
 
